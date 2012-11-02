@@ -4,23 +4,12 @@ var Request		= require("request")
 	, Parser		= require("xml2json")
 	, Config		= require(__dirname + "/config.js")
 	, UMich			= Config.umich
-	, mongodb 		= require('mongodb')
 ;
 
 
 
 // Interface handle
 var API = module.exports = exports;
-
-// add db and server to the api
-API.server = new mongodb.Server("alex.mongohq.com", 10034, {auto_reconnect: true});
-API.db = new mongodb.Db('umich-apis', API.server, {safe:false});
-API.db.open(function(err, db) {
-  API.db.authenticate('umich-api', 'mhackers12', function(err, result) {
-    if(err) throw err
-    	console.log("Mongo Server Connected"); //best way to do all this?
-  });
-});
 
 // Get the next OAuth token in the RoundRobin
 API.oauthToken = (function oauthTokenWrap() {
