@@ -12,16 +12,6 @@ var Request		= require("request")
 // Interface handle
 var API = module.exports = exports;
 
-// add db and server to the api
-API.server = new mongodb.Server("alex.mongohq.com", 10034, {auto_reconnect: true});
-API.db = new mongodb.Db('umich-apis', API.server, {safe:false});
-API.db.open(function(err, db) {
-  API.db.authenticate('umich-api', 'mhackers12', function(err, result) {
-    if(err) throw err
-    	console.log("Mongo Server Connected"); //best way to do all this?
-  });
-});
-
 // Get the next OAuth token in the RoundRobin
 API.oauthToken = (function oauthTokenWrap() {
 	var idx = 0, num = UMich.oauthTokens.length;
@@ -44,6 +34,10 @@ API.umichGET = function getUMAPI(resource, endpoint, params, cb) {
 	Request(options, function(error, response, body) {
 		try {
 			if(error || response.statusCode !== 200) { return cb(error); }
+
+			// If we just get back JSON, send it through
+			if(body[0] === "{") { return cb(null, JSON.parse(body)); }
+
 			var jsonBody = JSON.parse(Parser.toJson(body));
 			var topKey = Object.keys(jsonBody);
 			var result = jsonBody[topKey[0]]["return"];
