@@ -11,9 +11,9 @@ module.exports = Object.freeze({
 	}
 , mongodb: {
 		host: "alex.mongohq.com"
-	, port: 10077
+	, port: 10034
 	, name: "umich-apis"
-	, user: "userdame"
-	, pass: "passbard"
+	, user: "umich-api"
+	, pass: "mhackers12"
 	}
 });

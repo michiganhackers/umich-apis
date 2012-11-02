@@ -1,9 +1,9 @@
 var Express       = require("express")
   , Server        = Express()
   , Colors        = require("colors")
-	, Databases			= require(__dirname + "/databases")
-  , Config	      = require(__dirname + "/../common/config.js")	
-	, Application		= Config.app
+  , Databases	  = require(__dirname + "/../common/databases")
+  , Config	      = require(__dirname + "/../common/config")
+  , Application	  = Config.app
   , Router        = require(__dirname + "/router")
   , Logging       = require(__dirname + "/logging")
   , ErrorHandler  = require(__dirname + "/error_handler")
@@ -34,6 +34,7 @@ module.exports.listen = function listen() {
 		} else {
 			Server.listen(Application.port);
 			console.log("Server is listening on port".yellow, Application.port);
+			console.log("FUCK YES".blue);
 		}
 	});
 }

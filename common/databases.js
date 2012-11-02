@@ -1,6 +1,6 @@
-var MongoDB = require("mongodb")
-	, Config	= require("../common/config")
-	, MongoCfg = Config.mongodb
+var MongoDB 	= require("mongodb")
+	, Config	= require(__dirname + "/config")
+	, MongoCfg  = Config.mongodb
 ;
 
 var API = module.exports = exports;

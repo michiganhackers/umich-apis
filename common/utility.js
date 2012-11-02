@@ -4,10 +4,7 @@ var Request		= require("request")
 	, Parser		= require("xml2json")
 	, Config		= require(__dirname + "/config.js")
 	, UMich			= Config.umich
-	, mongodb 		= require('mongodb')
 ;
-
-
 
 // Interface handle
 var API = module.exports = exports;
@@ -17,9 +14,6 @@ API.oauthToken = (function oauthTokenWrap() {
 	var idx = 0, num = UMich.oauthTokens.length;
 	return (function oauthToken() { return UMich.oauthTokens[idx = (idx+1)%num]; });
 })();
-
-// Use this to test umichGET
-// require("./utility").umichGET("/Academics/v1/", "/SOCSchools/getSchools", {termCode: 1920}, function(err, body) { console.log(err, body); })
 
 // Make a UMich API GET Request
 API.umichGET = function getUMAPI(resource, endpoint, params, cb) {
