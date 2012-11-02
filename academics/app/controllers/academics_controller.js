@@ -1,8 +1,12 @@
+var Util = require("../../common/utility.js");
 
 var API = module.exports = exports;
 
+const RESOURCE = "/Academics/v1/";
 API.terms = function terms(req, res) {
-	res.send("Terms");
+	Util.umichGET(RESOURCE,"SOCSchools/getTerms", {},function(err,body) {
+		res.json(body);
+	})
 }
 
 API.schools = function schools(req, res) {
