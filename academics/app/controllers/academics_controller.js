@@ -67,14 +67,17 @@ API.sections = function sections(req, res) {
 	});
 }
 
-// Not working
 API.times = function times(req, res) {
 	var opts = {
 		termCode: req.params.term_id||1920
 	, subjectCode: req.params.dept_id||"EECS"
 	, catalogNumber: req.params.course_id
-	, sectionNumber: req.params.section_id||1
+	, sectionNumber: req.params.section_id||"001"
 	};
+
+	while(opts.sectionNumber.length < 3) {
+		opts.sectionNumber = "0"+opts.sectionNumber; 
+	}
 
 	getResource("SOCMeetings/getMeetings", opts, function(err, body) {
 		if(err) { return res.send(400); }
@@ -82,14 +85,17 @@ API.times = function times(req, res) {
 	});
 }
 
-// Not working
 API.instructors = function instructors(req, res) {
 	var opts = {
 		termCode: req.params.term_id||1920
 	, subjectCode: req.params.dept_id||"EECS"
 	, catalogNumber: req.params.course_id
-	, sectionNumber: req.params.section_id||1
+	, sectionNumber: req.params.section_id||"001"
 	};
+
+	while(opts.sectionNumber.length < 3) {
+		opts.sectionNumber = "0"+opts.sectionNumber; 
+	}
 
 	getResource("SOCInstructors/getInstructors", opts, function(err, body) {
 		if(err) { return res.send(400); }

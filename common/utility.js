@@ -34,18 +34,24 @@ API.umichGET = function getUMAPI(resource, endpoint, params, cb) {
 			var jsonBody = JSON.parse(Parser.toJson(body));
 			var topKey = Object.keys(jsonBody);
 			var result = jsonBody[topKey[0]]["return"];
-			if(result["xsi:nil"] === true) { return cb(null, []); }
-			else if(typeof(result) === "string") { return cb(null, result); }
-
-			var mappedResult = (result||[]).map(function(elem) {
+			if(result["xsi:nil"] === true) { 
+				return cb(null, []); 
+			} else if(typeof(result) === "string") { 
+				return cb(null, result); 
+			} else if (result instanceof Array) {
+				var mappedResult = (result||[]).map(function(elem) {
+					var elemNew = {};
+					for(var key in elem) { elemNew[key.toLowerCase()] = elem[key]["$t"]; }
+					return elemNew;
+				});
+				return cb(null, mappedResult);
+			} else {
 				var elemNew = {};
-				for(var key in elem) { elemNew[key.toLowerCase()] = elem[key]["$t"]; }
-				return elemNew;
-			});
-
-			cb(null, mappedResult);
+				for(var key in result) { elemNew[key.toLowerCase()] = result[key]["$t"]; }
+				return cb(null, elemNew);
+			}
 		} catch(e) {
-			console.log(e, options, body);
+			console.log(result, e);
 			cb(e);
 		}
 	});
