@@ -1,8 +1,9 @@
 // Imports like WHAT
-var Request	= require("request")
-	, Path		= require("path")
-	, Config	= require(__dirname + "/config.js")
-	, UMich		= Config.umich
+var Request		= require("request")
+	, Path			= require("path")
+	, Parser		= require("xml2json")
+	, Config		= require(__dirname + "/config.js")
+	, UMich			= Config.umich
 ;
 
 // Interface handle
@@ -19,13 +20,33 @@ API.oauthToken = (function oauthTokenWrap() {
 
 // Make a UMich API GET Request
 API.umichGET = function getUMAPI(resource, endpoint, params, cb) {
-	var url = UMich.apiBase + Path.join(resource, endpoint)
-		, headers = { "Authorization": "Bearer " + API.oauthToken() }
+	var url = "";
+	if(resource) { url = UMich.apiBase + Path.join(resource, endpoint); } 
+	else { url = endpoint; }
+
+	var headers = { "Authorization": "Bearer " + API.oauthToken() }
 		, options = {url: url, headers: headers, qs: params||{}}
 	;
 
 	Request(options, function(error, response, body) {
-		if(error || response.statusCode !== 200) { return cb(error); }
-		cb(null, body);
+		try {
+			if(error || response.statusCode !== 200) { return cb(error); }
+			var jsonBody = JSON.parse(Parser.toJson(body));
+			var topKey = Object.keys(jsonBody);
+			var result = jsonBody[topKey[0]]["return"];
+			if(result["xsi:nil"] === true) { return cb(null, []); }
+			else if(typeof(result) === "string") { return cb(null, result); }
+
+			var mappedResult = (result||[]).map(function(elem) {
+				var elemNew = {};
+				for(var key in elem) { elemNew[key.toLowerCase()] = elem[key]["$t"]; }
+				return elemNew;
+			});
+
+			cb(null, mappedResult);
+		} catch(e) {
+			console.log(e, options, body);
+			cb(e);
+		}
 	});
 }

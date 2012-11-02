@@ -11,6 +11,6 @@ module.exports = function Router(Server) {
 	Server.get("/:term_id/:dept_id/:course_id/sections", Academics.sections);
 	Server.get("/:term_id/:dept_id/:course_id/:section_id/times", Academics.times);
 	Server.get("/:term_id/:dept_id/:course_id/:section_id/instructors", Academics.instructors);
-	Server.get("/:term_id/:dept_id/:course_id/descriptions", Academics.descriptions);
+	Server.get("/:term_id/:dept_id/:course_id/description", Academics.description);
 
 }

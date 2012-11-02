@@ -1,38 +1,111 @@
+// Includes
 var Util = require("../../common/utility.js");
 
+// Interface
 var API = module.exports = exports;
 
-const RESOURCE = "/Academics/v1/";
+// Base for all `academics` calls
+var getResource = Util.umichGET.bind({}, "/Academics/v1/");
+
 API.terms = function terms(req, res) {
-	Util.umichGET(RESOURCE,"SOCSchools/getTerms", {},function(err,body) {
+	var opts = {};
+
+	getResource("SOCTerms/getTerms", opts, function(err, body) {
+		if(err) { return res.send(400); }
 		res.json(body);
-	})
+	});
 }
 
 API.schools = function schools(req, res) {
-	res.send("Schools");
+	var opts = {termCode: req.params.term_id||1920};
+
+	getResource("SOCSchools/getSchools", opts, function(err, body) {
+		if(err) { return res.send(400); }
+		res.json(body);
+	});
 }
 
 API.departments = function departments(req, res) {
-	res.send("Departments");
+	var opts = {
+		termCode: req.params.term_id||1920
+	, schoolCode: req.params.school_id||"ENG"
+	};
+
+	getResource("SOCSubjects/getSubjects", opts, function(err, body) {
+		if(err) { return res.send(400); }
+		res.json(body);
+	});
 }
 
 API.courses = function courses(req, res) {
-	res.send("Courses");
+	var opts = {
+		termCode: req.params.term_id||1920
+	, subjectCode: req.params.dept_id||"EECS"
+	, includeIndependentStudyFlag: "Y"
+	};
+
+	// Found this elsewhere...
+	var resourceHack 
+		= "https://webservices.dsc.umich.edu/rest-public/services/SOCCatalogNumbers/getCatalogNumbers";
+
+	Util.umichGET(null, resourceHack, opts, function(err, body) {
+		if(err) { return res.send(400); }
+		res.json(body);
+	});
 }
 
 API.sections = function sections(req, res) {
-	res.send("Sections");
+	var opts = {
+		termCode: req.params.term_id||1920
+	, subjectCode: req.params.dept_id||"EECS"
+	, catalogNumber: req.params.course_id
+	};
+
+	getResource("SOCSections/getCourseSections", opts, function(err, body) {
+		if(err) { return res.send(400); }
+		res.json(body);
+	});
 }
 
+// Not working
 API.times = function times(req, res) {
-	res.send("Times");
+	var opts = {
+		termCode: req.params.term_id||1920
+	, subjectCode: req.params.dept_id||"EECS"
+	, catalogNumber: req.params.course_id
+	, sectionNumber: req.params.section_id||1
+	};
+
+	getResource("SOCMeetings/getMeetings", opts, function(err, body) {
+		if(err) { return res.send(400); }
+		res.json(body);
+	});
 }
 
+// Not working
 API.instructors = function instructors(req, res) {
-	res.send("Instructors");
+	var opts = {
+		termCode: req.params.term_id||1920
+	, subjectCode: req.params.dept_id||"EECS"
+	, catalogNumber: req.params.course_id
+	, sectionNumber: req.params.section_id||1
+	};
+
+	getResource("SOCInstructors/getInstructors", opts, function(err, body) {
+		if(err) { return res.send(400); }
+		res.json(body);
+	});
 }
 
-API.descriptions = function descriptions(req, res) {
-	res.send("Descriptions");
+API.description = function description(req, res) {
+	var opts = {
+		termCode: req.params.term_id||1920
+	, subjectCode: req.params.dept_id||"EECS"
+	, catalogNumber: req.params.course_id
+	};
+
+	getResource("SOCCourseDescr/getCourseDescr", opts, function(err, body) {
+		if(err) { return res.send(400); }
+		res.json(body);
+	});
 }
