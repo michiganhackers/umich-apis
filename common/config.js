@@ -9,4 +9,11 @@ module.exports = Object.freeze({
 		, "K6K4bIffy1wWECywkPOK1wVfgN4a"
 		]
 	}
+, mongodb: {
+		host: "alex.mongohq.com"
+	, port: 10077
+	, name: "umich-apis"
+	, user: "userdame"
+	, pass: "passbard"
+	}
 });

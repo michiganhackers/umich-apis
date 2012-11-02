@@ -1,7 +1,9 @@
 var Express       = require("express")
   , Server        = Express()
   , Colors        = require("colors")
+	, Databases			= require(__dirname + "/databases")
   , Config	      = require(__dirname + "/../common/config.js")	
+	, Application		= Config.app
   , Router        = require(__dirname + "/router")
   , Logging       = require(__dirname + "/logging")
   , ErrorHandler  = require(__dirname + "/error_handler")
@@ -25,8 +27,15 @@ ErrorHandler(Server);				// Error handling configuration
 
 // Listen on the default port, or a custom parameter
 module.exports.listen = function listen() {
-  Server.listen(Config.port);
-  console.log("Server is listening on port".yellow, Config.port);
+	Databases.initMongoDB(function(err) {
+		if(err) { 
+			console.log("MongoDB failed to initialize".red, err);
+			process.exit(1); 
+		} else {
+			Server.listen(Application.port);
+			console.log("Server is listening on port".yellow, Application.port);
+		}
+	});
 }
 
 // Implement these later
