@@ -19,6 +19,7 @@
   , "async": "git+https://github.com/caolan/async.git#v0.1.22"
   , "less": "git+https://github.com/cloudhead/less.js.git#master"
   , "jade": "git+https://github.com/visionmedia/jade.git#0.26.3"
+	, "request": "2.11.4"
   }
 , "license": "MIT"
 }

@@ -1,15 +1,13 @@
 var Express       = require("express")
   , Server        = Express()
   , Colors        = require("colors")
-  , Settings      = require(__dirname + "/settings.js")	// '.js' enforces file existence
+  , Config	      = require(__dirname + "/../common/config.js")	
   , Router        = require(__dirname + "/router")
   , Logging       = require(__dirname + "/logging")
   , ErrorHandler  = require(__dirname + "/error_handler")
   , Views         = require(__dirname + "/views")
   , Static        = require(__dirname + "/static")
 ;
-
-const SERVER_PORT = Settings.port; 
 
 // Zero-Config modules
 Server.use(Express.favicon());
@@ -26,9 +24,9 @@ Views(Server);							// View configuration
 ErrorHandler(Server);				// Error handling configuration
 
 // Listen on the default port, or a custom parameter
-module.exports.listen = function listen(subject) {
-  Server.listen(subject||SERVER_PORT);
-  console.log("Server is listening on port".yellow, subject||SERVER_PORT);
+module.exports.listen = function listen() {
+  Server.listen(Config.port);
+  console.log("Server is listening on port".yellow, Config.port);
 }
 
 // Implement these later
