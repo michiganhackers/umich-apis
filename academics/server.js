@@ -1,1 +1,1 @@
-require(__dirname + "/config/server").listen();
+module.exports = exports = require(__dirname + "/config/server");
