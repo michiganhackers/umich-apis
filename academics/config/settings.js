@@ -1,1 +1,3 @@
-settings.js.tmp
+module.exports = {
+	port: 1024
+}
