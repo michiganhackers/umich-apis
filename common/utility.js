@@ -7,8 +7,6 @@ var Request		= require("request")
 	, mongo	   		= require(__dirname + "/databases")
 ;
 
-
-
 // Interface handle
 var API = module.exports = exports;
 
@@ -31,10 +29,8 @@ function addToCache(collection,obj) {
 	});
 }
 
-
-
 // Make a UMich API GET Request
-API.umichGET = function getUMAPI(resource, endpoint, params, cb) {
+API.umichGET = function getUMAPI(resource, endpoint, params, pathKey, cb) {
 	var url = "";
 	if(resource) { url = UMich.apiBase + Path.join(resource, endpoint); } 
 	else { url = endpoint; }
@@ -45,11 +41,12 @@ API.umichGET = function getUMAPI(resource, endpoint, params, cb) {
 
 	mongo.db.collection("academics_cache", function (err, collection) {
 		if(err) throw err
-		collection.findOne({}, function(err, docs) {
-			console.log(docs);
+			
+		collection.findOne({query:pathKey}, function(err, docs) {
 
 			if(docs != null) cb(null, docs); 
 			else {
+				
 				Request(options, function(error, response, body) {
 					try {
 						if(error || response.statusCode !== 200) { return cb(error); }
@@ -67,7 +64,7 @@ API.umichGET = function getUMAPI(resource, endpoint, params, cb) {
 								return elemNew;
 							});
 							// need to map to different caches here! ***
-							addToCache("academics_cache", {query: params, data: mappedResult});
+							addToCache("academics_cache", {query: pathKey, data: mappedResult});
 							return cb(null, mappedResult);
 						} else {
 							var elemNew = {};
@@ -79,6 +76,7 @@ API.umichGET = function getUMAPI(resource, endpoint, params, cb) {
 						cb(e);
 					}
 				});
+				
 			}
 		});
 	});
