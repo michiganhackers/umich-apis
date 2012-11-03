@@ -44,7 +44,7 @@ API.umichGET = function getUMAPI(resource, endpoint, params, pathKey, cb) {
 			
 		collection.findOne({query:pathKey}, function(err, docs) {
 
-			if(docs != null) cb(null, docs); 
+			if(docs != null) cb(null, docs.data); 
 			else {
 				
 				Request(options, function(error, response, body) {
