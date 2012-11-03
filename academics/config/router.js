@@ -15,6 +15,7 @@ module.exports = function Router(Server) {
 
 
 	// implicit current term ids
+	// will mess up cache when semesters change *** 
 	Server.get("/schools", Academics.schools);
 	Server.get("/:school_id/departments", Academics.departments);
 	Server.get("/:dept_id/courses", Academics.courses);
