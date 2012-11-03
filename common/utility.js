@@ -2,8 +2,9 @@
 var Request		= require("request")
 	, Path			= require("path")
 	, Parser		= require("xml2json")
-	, Config		= require(__dirname + "/config.js")
+	, Config		= require(__dirname + "/config")
 	, UMich			= Config.umich
+	, mongo	   		= require(__dirname + "/databases")
 ;
 
 
@@ -20,6 +21,18 @@ API.oauthToken = (function oauthTokenWrap() {
 // Use this to test umichGET
 // require("./utility").umichGET("/Academics/v1/", "/SOCSchools/getSchools", {termCode: 1920}, function(err, body) { console.log(err, body); })
 
+function addToCache(collection,obj) {
+	mongo.db.collection(collection, function (err, collection) {
+	if(err) throw err
+		collection.insert(obj, function(err, docs){
+			if(err) throw err
+				//console.log(docs);
+		});
+	});
+}
+
+
+
 // Make a UMich API GET Request
 API.umichGET = function getUMAPI(resource, endpoint, params, cb) {
 	var url = "";
@@ -30,31 +43,49 @@ API.umichGET = function getUMAPI(resource, endpoint, params, cb) {
 		, options = {url: url, headers: headers, qs: params||{}}
 	;
 
-	Request(options, function(error, response, body) {
-		try {
-			if(error || response.statusCode !== 200) { return cb(error); }
-			var jsonBody = JSON.parse(Parser.toJson(body));
-			var topKey = Object.keys(jsonBody);
-			var result = jsonBody[topKey[0]]["return"];
-			if(result["xsi:nil"] === true) { 
-				return cb(null, []); 
-			} else if(typeof(result) === "string") { 
-				return cb(null, result); 
-			} else if (result instanceof Array) {
-				var mappedResult = (result||[]).map(function(elem) {
-					var elemNew = {};
-					for(var key in elem) { elemNew[key.toLowerCase()] = elem[key]["$t"]; }
-					return elemNew;
+	mongo.db.collection("academics_cache", function (err, collection) {
+		if(err) throw err
+		collection.findOne({"query": {
+    "termCode": "1920",
+    "subjectCode": "EECS",
+    "catalogNumber": "281"
+  }}, function(err, docs) {
+			console.log(docs);
+
+			if(docs != null) cb(null, docs); 
+			else {
+				Request(options, function(error, response, body) {
+					try {
+						if(error || response.statusCode !== 200) { return cb(error); }
+						var jsonBody = JSON.parse(Parser.toJson(body));
+						var topKey = Object.keys(jsonBody);
+						var result = jsonBody[topKey[0]]["return"];
+						if(result["xsi:nil"] === true) { 
+							return cb(null, []); 
+						} else if(typeof(result) === "string") { 
+							return cb(null, result); 
+						} else if (result instanceof Array) {
+							var mappedResult = (result||[]).map(function(elem) {
+								var elemNew = {};
+								for(var key in elem) { elemNew[key.toLowerCase()] = elem[key]["$t"]; }
+								return elemNew;
+							});
+							// need to map to different caches here! ***
+							addToCache("academics_cache", {query: params, data: mappedResult});
+							return cb(null, mappedResult);
+						} else {
+							var elemNew = {};
+							for(var key in result) { elemNew[key.toLowerCase()] = result[key]["$t"]; }
+							return cb(null, elemNew);
+						}
+					} catch(e) {
+						console.log(result, e);
+						cb(e);
+					}
 				});
-				return cb(null, mappedResult);
-			} else {
-				var elemNew = {};
-				for(var key in result) { elemNew[key.toLowerCase()] = result[key]["$t"]; }
-				return cb(null, elemNew);
 			}
-		} catch(e) {
-			console.log(result, e);
-			cb(e);
-		}
+		});
 	});
+
+	
 }

@@ -14,6 +14,7 @@ var API = module.exports = exports;
 		Database.open(function(err, db) {
 			if(err) { return cb(err); }
 			Database.authenticate(MongoCfg.user, MongoCfg.pass, cb);
+			API.db = Database;
 		});
 	};
 
