@@ -1,8 +1,7 @@
 UMich APIs
-
 ====================
 
-umich.io/academics/v0/
+###umich.io/academics/v0/
 
 ###/terms 
 all available terms
