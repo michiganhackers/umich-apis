@@ -45,11 +45,7 @@ API.umichGET = function getUMAPI(resource, endpoint, params, cb) {
 
 	mongo.db.collection("academics_cache", function (err, collection) {
 		if(err) throw err
-		collection.findOne({"query": {
-    "termCode": "1920",
-    "subjectCode": "EECS",
-    "catalogNumber": "281"
-  }}, function(err, docs) {
+		collection.findOne({}, function(err, docs) {
 			console.log(docs);
 
 			if(docs != null) cb(null, docs); 
