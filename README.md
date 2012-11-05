@@ -3,7 +3,7 @@
 ###Current APIs
 **academics** - *course guide and class info (works great!)*
 
-**building** - * building location information (not quite done)*
+**building** - *building location information (not quite done)*
 
 **mcommunity** - *acquire data about an individual at UMich (not quite done)*
 
