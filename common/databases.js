@@ -17,4 +17,4 @@ var API = module.exports = exports;
 		});
 	};
 
-})(require("MongoDB"));
+})(require("mongodb"));

@@ -21,6 +21,7 @@
   , "jade": "git+https://github.com/visionmedia/jade.git#0.26.3"
 	, "request": "2.11.4"
 	, "mongodb": "1.1.x"
+	, "xml2json": "0.3.2"
   }
 , "license": "MIT"
 }
