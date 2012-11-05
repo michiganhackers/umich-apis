@@ -1,29 +1,20 @@
-:markdown
-	UMich APIs
-	====================
+#UMich APIs : umich.io
 
-	###umich.io/academics/v0/
+###Current APIs
+**academics** - *course guide and class info*
 
-	###/terms 
-	all available terms
+**buildings** - * building location information*
 
-	###/:term_id/schools	
-	list of schools
+**mcommunity** - *acquire data about an individual at UMich*
 
-	###/:term_id/:school_id/departments
-	list of departments
+###Visit [umich.io](http://umich.io/) for endpoint info and documentation. 
 
-	###/:term_id/:dept_id/courses
-	courses in department
+Please note that these services are under active development, if you find any issues please let us know by submitting an issue
 
-	###/:term_id/:dept_id/:course_id/sections
-	sections of a course
+###Contributors
+[Max](http://github.com/mhseiden)
 
-	###/:term_id/:dept_id/:course_id/:section_id/times
-	times of course
+[Otto](http://github.com/mhseiden)
 
-	###/:term_id/:dept_id/:course_id/:section_id/instructors
-	instructors for a course
+####Special Thanks to Ted and David at ITS for helping to make this happen
 
-	###/:term_id/:dept_id/:course_id/description
-	description of the course
