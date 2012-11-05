@@ -22,6 +22,7 @@
 	, "request": "2.11.4"
 	, "mongodb": "1.1.x"
 	, "xml2json": "0.3.2"
+  , "markdown": "0.4"
   }
 , "license": "MIT"
 }

@@ -1,0 +1,51 @@
+
+html
+	head
+		try: link(rel='stylesheet', href='css/bootstrap.min.css')
+
+	body
+		.container
+			
+			h1 Welcome to umich.io!
+			span Please note that these services are under active development, if you notice any problems please let us know by submitting an issue on our 
+			a(href="http://github.com/michiganhackers/umich-apis") github page
+			span . Thanks!
+			br
+			h3.api Academics : umich.io/academics/v0/
+			.well
+				h4 Notes
+				.notes If no :term_id is provided the current semester will be assumed
+				h3.endpt /terms 
+				.info all available terms
+				h3.endpt /:term_id/schools 
+				.info list of schools
+				h3.endpt /:term_id/:school_id/departments
+				.info list of departments
+				h3.endpt /:term_id/:dept_id/:course_id/sections
+				.info sections of a course
+				h3.endpt /:term_id/:dept_id/:course_id/:section_id/times
+				.info times of course
+						
+				h3.endpt /:term_id/:dept_id/:course_id/:section_id/instructors
+				.info instructors for a course
+						
+				h3.endpt /term_id/:dept_id/:course_id/description
+				.info description of the course
+
+			h3.api Building Locations : umich.io/buildings/v0/
+			.well
+				h4 Not quite done yet :/
+	
+			h3.api Building Locations : umich.io/buildings/v0/
+			.well
+				h4 Not quite done yet :/
+	
+
+			h3 Contributors
+			ul
+				li 
+					a(href="http://github.com/mhseiden") Max
+				li
+					a(href="http://github.com/ottosipe") Otto
+
+			h3 Special Thanks to Ted and Dave at ITS for helping to make this happen!
