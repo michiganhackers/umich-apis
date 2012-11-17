@@ -1,6 +1,5 @@
 var API = module.exports = exports;
 
-API.docs = function people(req, res) {
-	console.log(res);
+API.docs = function docs(req, res) {
 	res.render("docs");
 }

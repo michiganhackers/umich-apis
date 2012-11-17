@@ -1,7 +1,7 @@
 var Express       = require("express")
   , Server        = Express()
   , Colors        = require("colors")
-	, Config				= require(__dirname + "/../common/config.js")
+  , Config				= require(__dirname + "/../common/config.js")
   , Settings      = require(__dirname + "/settings.js")	// '.js' enforces file existence
   , Router        = require(__dirname + "/router.js")
 ;

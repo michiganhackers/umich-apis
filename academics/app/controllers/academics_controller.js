@@ -39,7 +39,7 @@ API.departments = function departments(req, res) {
 
 API.courses = function courses(req, res) {
 	var opts = {
-		termCode: req.params.term_id||1920
+		 termCode: req.params.term_id||1920
 	, subjectCode: req.params.dept_id||"EECS"
 	, includeIndependentStudyFlag: "Y"
 	};

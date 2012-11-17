@@ -1,5 +1,5 @@
 // Imports like WHAT
-var Request		= require("request")
+var Request		    = require("request")
 	, Path			= require("path")
 	, Parser		= require("xml2json")
 	, Config		= require(__dirname + "/config")
@@ -23,8 +23,7 @@ function addToCache(collection,obj) {
 	mongo.db.collection(collection, function (err, collection) {
 	if(err) throw err
 		collection.insert(obj, function(err, docs){
-			if(err) throw err
-				//console.log(docs);
+			if(err) throw err // uncaught errors ***
 		});
 	});
 }
