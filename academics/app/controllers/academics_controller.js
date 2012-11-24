@@ -5,12 +5,12 @@ var Util = require("../../common/utility.js");
 var API = module.exports = exports;
 
 // Base for all `academics` calls
-var getResource = Util.umichGET.bind({}, "/Academics/v1/");
+var getResource = Util.dbLookup.bind({}, "academics");
 
 API.terms = function terms(req, res) {
 	var opts = {};
 
-	getResource("SOCTerms/getTerms", opts, req.path, function(err, body) {
+	getResource(opts, function(err, body) {
 		if(err) { return res.send(400); }
 		res.json(body);
 	});
@@ -19,7 +19,7 @@ API.terms = function terms(req, res) {
 API.schools = function schools(req, res) {
 	var opts = {termCode: req.params.term_id||1920};
 
-	getResource("SOCSchools/getSchools", opts, req.path, function(err, body) {
+	getResource(opts, function(err, body) {
 		if(err) { return res.send(400); }
 		res.json(body);
 	});
@@ -31,7 +31,7 @@ API.departments = function departments(req, res) {
 	, schoolCode: req.params.school_id||"ENG"
 	};
 
-	getResource("SOCSubjects/getSubjects", opts, req.path, function(err, body) {
+	getResource(opts, function(err, body) {
 		if(err) { return res.send(400); }
 		res.json(body);
 	});
@@ -44,11 +44,7 @@ API.courses = function courses(req, res) {
 	, includeIndependentStudyFlag: "Y"
 	};
 
-	// Found this elsewhere...
-	var resourceHack 
-		= "https://webservices.dsc.umich.edu/rest-public/services/SOCCatalogNumbers/getCatalogNumbers";
-
-	Util.umichGET(null, resourceHack, opts, req.path, function(err, body) {
+	getResource(opts, function(err, body) {
 		if(err) { return res.send(400); }
 		res.json(body);
 	});
@@ -61,7 +57,7 @@ API.sections = function sections(req, res) {
 	, catalogNumber: req.params.course_id
 	};
 
-	getResource("SOCSections/getCourseSections", opts, req.path, function(err, body) {
+	getResource(opts, function(err, body) {
 		if(err) { return res.send(400); }
 		res.json(body);
 	});
@@ -79,7 +75,7 @@ API.times = function times(req, res) {
 		opts.sectionNumber = "0"+opts.sectionNumber; 
 	}
 
-	getResource("SOCMeetings/getMeetings", opts, req.path, function(err, body) {
+	getResource(opts, function(err, body) {
 		if(err) { return res.send(400); }
 		res.json(body);
 	});
@@ -97,7 +93,7 @@ API.instructors = function instructors(req, res) {
 		opts.sectionNumber = "0"+opts.sectionNumber; 
 	}
 
-	getResource("SOCInstructors/getInstructors", opts, req.path, function(err, body) {
+	getResource(opts, function(err, body) {
 		if(err) { return res.send(400); }
 		res.json(body);
 	});
@@ -110,7 +106,7 @@ API.description = function description(req, res) {
 	, catalogNumber: req.params.course_id
 	};
 
-	getResource("SOCCourseDescr/getCourseDescr", opts, req.path, function(err, body) {
+	getResource(opts, function(err, body) {
 		if(err) { return res.send(400); }
 		res.json(body);
 	});

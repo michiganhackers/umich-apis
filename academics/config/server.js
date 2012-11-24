@@ -1,9 +1,10 @@
 var Express       = require("express")
   , Server        = Express()
   , Colors        = require("colors")
-  , Config				= require(__dirname + "/../common/config.js")
+  , Config		  = require(__dirname + "/../common/config.js")
   , Settings      = require(__dirname + "/settings.js")	// '.js' enforces file existence
   , Router        = require(__dirname + "/router.js")
+  , Util 		  = require(__dirname + "/../common/utility.js")
 ;
 
 const SERVER_PORT = Settings.port; 
@@ -30,6 +31,13 @@ module.exports.listen = function listen(subject) {
 
 module.exports.serverHandle = function serverHandle() {
 	return Server;
+}
+
+module.exports.buildDB = function buildDBHandle(req,res) {
+	Util.buildDB('WN2013.csv', "academics", function(data) {
+		res.send(data);
+	});
+	
 }
 
 // Implement these later
