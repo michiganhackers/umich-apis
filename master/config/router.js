@@ -5,6 +5,6 @@ var Academics = require(APPLICATION_PATH + "academics/server");
 
 module.exports = function Router(Server) {
 	Server.use("/academics/v0", Academics.serverHandle());
-	Server.get("/academics/admin", Academics.buildDB);
+	Server.get("/academics/read", Academics.buildDB);
 	Server.get("/", Master.docs);
 }

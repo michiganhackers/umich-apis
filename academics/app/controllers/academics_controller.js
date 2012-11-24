@@ -1,11 +1,25 @@
 // Includes
 var Util = require("../../common/utility.js");
+var Model = require("../models/academics_model.js");
 
 // Interface
 var API = module.exports = exports;
 
 // Base for all `academics` calls
-var getResource = Util.dbLookup.bind({}, "academics");
+var getResource = Util.dbLookup.bind({}, "classes_W13");
+
+
+API.subjects = function subj(req, res) {
+	var opts = {};
+
+	getResource(opts, function(err, body) {
+		if(err) { return res.send(400); }
+		res.json(body);
+	});
+}
+
+/////////
+
 
 API.terms = function terms(req, res) {
 	var opts = {};

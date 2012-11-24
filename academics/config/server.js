@@ -4,7 +4,7 @@ var Express       = require("express")
   , Config		  = require(__dirname + "/../common/config.js")
   , Settings      = require(__dirname + "/settings.js")	// '.js' enforces file existence
   , Router        = require(__dirname + "/router.js")
-  , Util 		  = require(__dirname + "/../common/utility.js")
+  , Model 	      = require("../app/models/academics_model.js");
 ;
 
 const SERVER_PORT = Settings.port; 
@@ -34,10 +34,9 @@ module.exports.serverHandle = function serverHandle() {
 }
 
 module.exports.buildDB = function buildDBHandle(req,res) {
-	Util.buildDB('WN2013.csv', "academics", function(data) {
+	Model.buildDB('WN2013.csv', "sections_W13", function(data) {
 		res.send(data);
 	});
-	
 }
 
 // Implement these later
