@@ -15,6 +15,7 @@ API.dbLookup = function lookUP(dbName, params, cb) {
 	mongo.db.collection(dbName, function (err, collection) {
 		if(err) throw err
 			console.log(params);
+			collection.find(params, {"_id":0}).toArray(cb);
 	});
 }
 

@@ -10,6 +10,8 @@ var API = module.exports = exports;
 API.buildDB = function buildDB(file, database, cb) {
 	var days = ["M","T","W","TH","F","S","SU"];
 	var all = [];
+		// insure indices!! ***
+
 		mongo.db.collection(database, function (err, collection) {
 			if(err) cb(err);
 			collection.remove({$atomic: true},  function () {
@@ -52,14 +54,6 @@ API.buildDB = function buildDB(file, database, cb) {
 						return cb(err);
 					}
 				});
-				
-
-				// make new dbs and insure indices
-				// make classes collection
-				// -> classes only - no times etc
-
-				// search by credits, instructor, location
-
 			})
 			.on('end', function(count){
 				cb("Inserted "+count);
@@ -70,33 +64,3 @@ API.buildDB = function buildDB(file, database, cb) {
 		});
 	});
 }
-
-/*function parseInfo() {
-	mongo.db.collection("sections_W13", function (err, collection) {
-		collection.remove({$atomic: true}, function() {
-			mongo.db.collection("classes_W13", function (err, collection) {
-			if(err) throw err
-				collection.distinct("code", function(err, docs) {
-					for(i in docs) {
-						thing(collection, docs[i]);
-					}
-				});
-			});
-		});
-	}); 
-}
-
-function thing(collection, code) {
-	collection.distinct("number",{"code":code}, function(err, docs) {
-		var obj = {};
-		collection.findOne({"code":code}, function(err, one) {
-			obj.code = code;
-			obj.subject = one.subject;
-			obj.sections = docs;
-			mongo.db.collection("sections_W13", function (err, collection) {
-				collection.insert(obj);
-			});
-		});
-	});
-}*/
-
