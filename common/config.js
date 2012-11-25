@@ -13,7 +13,7 @@ module.exports = Object.freeze({
 		host: "alex.mongohq.com"
 	, port: 10034
 	, name: "umich-apis"
-	, user: "umich-api"
-	, pass: "mhackers12"
+	, user: process.env.DB_USER
+	, pass: process.env.DB_PASS
 	}
 });

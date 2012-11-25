@@ -1,16 +1,15 @@
 {
-  "name": "application-name"
+  "name": "umich-io"
 , "version": "0.0.0"
-, "author": "Your Name <your@email.com"
-, "description": "Application Description"
+, "author": "Otto + Max "
+, "description": "API collection for UMich"
 , "scripts": {
-    "start": "node server"
-  , "test": "node server" 
+    "start": "node master/server.js" 
   }
 , "main": "config/require.js"
 , "repository": {
     "type": "git"
-  , "url": "your-github-repo"
+  , "url": "https://github.com/michiganhackers/umich-apis"
   }
 , "dependencies": {
     "winston": "git+https://github.com/flatiron/winston.git#v0.6.2"

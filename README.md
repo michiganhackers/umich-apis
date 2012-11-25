@@ -7,6 +7,10 @@
 
 Please note that these services are under active development, if you notice any problems please let us know by submitting an issue
 
+### To Run:
+Enter MongoDB Creds in /common/config.js
+Set Env Variables DB_USER and DB_PASS
+
 ###Contributors
 * [Max](http://github.com/mhseiden)
 * [Otto](http://github.com/ottosipe)
