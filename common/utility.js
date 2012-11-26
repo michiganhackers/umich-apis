@@ -11,11 +11,11 @@ var Path			= require("path")
 var API = module.exports = exports;
 
 // make call to new API
-API.dbLookup = function lookUP(dbName, params, cb) {
+API.dbLookup = function lookUP(dbName, params, sort, cb) {
 	mongo.db.collection(dbName, function (err, collection) {
 		if(err) throw err
 			console.log(params);
-			collection.find(params, {"_id":0}).toArray(cb);
+			collection.find(params, {"_id":0}).sort(sort).toArray(cb);
 	});
 }
 

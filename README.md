@@ -12,8 +12,9 @@ Enter MongoDB Creds in /common/config.js
 Set Env Variables DB_USER and DB_PASS
 
 ###Contributors
-* [Max](http://github.com/mhseiden)
 * [Otto](http://github.com/ottosipe)
+* [Max](http://github.com/mhseiden)
+
 
 ####Special Thanks to Ted and Dave at ITS for helping to make this happen!
 
