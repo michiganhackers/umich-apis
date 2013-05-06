@@ -1,7 +1,7 @@
 module.exports = Object.freeze({
 	app: { port: 1024 }
 , umich: {
-		apiBase: "https://sunbittern.dsc.umich.edu:8243"
+	apiBase: "https://sunbittern.dsc.umich.edu:8243"
 	, oauthTokens: [
 			"Kkxk_hIotm7Bdr7gShsf4wvovbUa"
 		, "ZsMQVWtqe5Z_xRq9GRfHwov5fq8a"
@@ -10,9 +10,9 @@ module.exports = Object.freeze({
 		]
 	}
 , mongodb: {
-		host: "alex.mongohq.com"
-	, port: 10034
-	, name: "umich-apis"
+	host: "dharma.mongohq.com"
+	, port: 10044
+	, name: "umich-io"
 	, user: process.env.DB_USER
 	, pass: process.env.DB_PASS
 	}
