@@ -12,6 +12,10 @@ API.buildDB = function buildDB(file, database, cb) {
 	var all = [];
 		// insure indices!! ***
 
+		mongo.db.collection("subjects_W13").ensureIndex({​code:1}{ background:true, unique:true, dropDups:true });
+		mongo.db.collection("classes_W13").ensureIndex({​code:1,number:1}{ background:true, unique:true, dropDups:true });
+		mongo.db.collection("sections_W13").ensureIndex({id:1}{ background:true, unique:true, dropDups:true });
+
 		mongo.db.collection(database, function (err, collection) {
 			if(err) cb(err);
 			collection.remove({$atomic: true},  function () {
