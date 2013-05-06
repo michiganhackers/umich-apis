@@ -34,7 +34,7 @@ module.exports.serverHandle = function serverHandle() {
 }
 
 module.exports.buildDB = function buildDBHandle(req,res) {
-	Model.buildDB('WN2013.csv', "sections_W13", function(data) {
+	Model.buildDB('SP2013.csv', "sections_W13", function(data) {
 		res.send(data);
 	});
 }
