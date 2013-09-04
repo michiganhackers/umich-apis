@@ -34,7 +34,6 @@ module.exports.listen = function listen() {
 		} else {
 			Server.listen(Application.port);
 			console.log("Server is listening on port".yellow, Application.port);
-			console.log("FUCK YES".blue);
 		}
 	});
 }
